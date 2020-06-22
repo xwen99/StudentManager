@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+</head>
+
+<body style="display: table; width: 100%;">
+    <div>
+        <div class="main" style="padding-top: 10%; padding-left: 10%;">
+            <h1 style="color: black;">学生管理信息系统</h1>
+            <h3>
+                以{{StuOrTea}}身份登录
+            </h3>
+            <form action={{PostAddress}} method="post">
+                {% csrf_token %}
+                <table style="border:0px; margin-top: 20px;">
+                    <tr style="height: 40px;">
+                        <td>
+                            <input style="width: 300px;" type="text" name="id" value="" placeholder="{{UserNameLabel}}"/>
+                        </td>
+                    </tr>
+                    <tr style="height: 40px;">
+                        <td>
+                            <input style="width: 300px;"  type="password" name="password" value="" placeholder="密码"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ErrorMessage}}
+                        </td>
+                    </tr>
+                    <tr style="height: 80px;">
+                        <td>
+                            <input type="submit" value="确认登陆"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        {% include "footer.html" %}
+</body>
+
+</html>

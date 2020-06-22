@@ -1,0 +1,69 @@
+<div style="padding-left: 20px; padding-right: 20px; text-align: left;">
+    <h1>教务：学籍管理</h1>
+    <h2>学院/专业目录</h2>
+        {% for collage in Category %}
+            <h3>{{collage.Name}}</h3>
+            <p><div>
+                <ul class="TabBar">
+                    {% for majority in collage.Majorities %}
+                        <li>
+                            <a style="color: white;" href="{% url 'jw_students' %}?id={{majority.Id}}">
+                                {{majority.Name}}
+                            </a>
+                        </li>
+                        {% empty %}
+                        该学院暂无专业。
+                    {% endfor %}
+                </ul>
+            </div></p>
+            {% empty %}
+            暂无学院/专业。
+        {% endfor %}
+        <h2>学生名单</h2>
+        {% if Majority %}
+        <p>{{Majority.Collage.Name}}，{{Majority.Name}}专业</p>
+        <p>专业编号为：{{Majority.Id}} ，共有学生 {{Students | length}} 人</p>
+        <h3>教务操作</h3>
+            <form action="{% url 'new_user' %}" method="get">
+                {% csrf_token %}
+                学号：<input type="text" name="id" />
+                姓名：<input type="text" name="name" />
+                <input type="submit" style="margin-left: 20px;" value="录入学生" />
+                <input type="hidden" name="type" value="student" />
+                <input type="hidden" name="maj_id" value="{{Majority.Id}}" />
+                <input type="hidden" name="next" value="{% url 'jw_students' %}?id={{Majority.Id}}&message=" />
+            </form>
+        <h3>学生名单</h3>
+        <p><div class="tborder"><table>
+            <tr>
+                <th style="width: 120px;">学号</th>
+                <th style="width: 160px;">姓名</th>
+                <th style="width: 160px;">已修学分</th>
+                <th style="width: 160px;">平均成绩</th>
+                <th>更多操作</th>
+            </tr>
+            {% for student in Students %}
+            <tr>
+                <td>
+                    {{student.Id}}
+                </td>
+                <td>
+                    {{student.Name}}
+                </td>
+                <td>
+                    {{student.Credit}}
+                </td>
+                <td>
+                    {{student.Score}}
+                </td>
+                <td>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </table></div></p>
+    {% else %}
+        请选择一个专业以查看该专业的学生名单。
+    {% endif %}
+
+</div>

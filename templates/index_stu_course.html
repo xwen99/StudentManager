@@ -1,0 +1,133 @@
+<div style="padding-left: 20px; padding-right: 20px; text-align: left;">
+    <h1>课程管理</h1>
+    <h2>已完成课程</h2>
+    <div class="tborder">
+        <table>
+            {% if CoursesCompleted %}
+            <tr>
+                <th>课号</th>
+                <th>课程名</th>
+                <th>任课教师</th>
+                <th>学分数</th>
+            </tr>
+            {% else %}
+            暂无课程记录。
+            {% endif %}
+            {% for course in CoursesCompleted %}
+            <tr>
+                <td>
+                    {{course.CourseId}}
+                </td>
+                <td>
+                    {{course.CourseName}}
+                </td>
+                <td>
+                    {{course.TeacherName}}
+                </td>
+                <td>
+                    {{course.Credit}}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <h2>未完成课程</h2>
+    <div class="tborder">
+        <table>
+            {% if CoursesUncompleted %}
+            <tr>
+                <th>课号</th>
+                <th>课程名</th>
+                <th>任课教师</th>
+                <th>学分数</th>
+                <th>上课时间</th>
+                <th>上课地点</th>
+                <th>管理课程</th>
+            </tr>
+            {% else %}
+            暂无课程记录。
+            {% endif %}
+            {% for course in CoursesUncompleted %}
+            <tr>
+                <td>
+                    {{course.CourseId}}
+                </td>
+                <td>
+                    {{course.CourseName}}
+                </td>
+                <td>
+                    {{course.TeacherName}}
+                </td>
+                <td>
+                    {{course.Credit}}
+                </td>
+                <td>
+                    {{course.CourseTime}}
+                </td>
+                <td>
+                    {{course.CoursePlace}}
+                </td>
+                <td>
+                    <form action="{% url 'stu_quit_course' %}" method="get" style="float: left;">
+                        {% csrf_token %}
+                        <input type="hidden" name="student_id" value="{{User.Id}}" />
+                        <input type="hidden" name="course_id" value="{{course.CourseId}}" />
+                        <input type="hidden" name="next" value="/stu_course/?message="/>
+                        <input type="submit" value="退课" />
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <h2 align=left>可选课程</h2>
+    <div class="tborder">
+        <table>
+            {% if CoursesUnselected %}
+            <tr>
+                <th>课号</th>
+                <th>课程名</th>
+                <th>任课教师</th>
+                <th>学分数</th>
+                <th>上课时间</th>
+                <th>上课地点</th>
+                <th>管理课程</th>
+            </tr>
+            {% else %}
+            暂无课程记录。
+            {% endif %}
+            {% for course in CoursesUnselected %}
+            <tr>
+                <td>
+                    {{course.CourseId}}
+                </td>
+                <td>
+                    {{course.CourseName}}
+                </td>
+                <td>
+                    {{course.TeacherName}}
+                </td>
+                <td>
+                    {{course.Credit}}
+                </td>
+                <td>
+                    {{course.CourseTime}}
+                </td>
+                <td>
+                    {{course.CoursePlace}}
+                </td>
+                <td>
+                    <form action="{% url 'stu_select_course' %}" method="get">
+                        {% csrf_token %}
+                        <input type="submit" value="选课" />
+                        <input type="hidden" name="course_id" value="{{course.CourseId}}" />
+                        <input type="hidden" name="student_id" value="{{User.Id}}" />
+                        <input type="hidden" name="next" value="/stu_course/?message=" />
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div style="padding-left: 20px; padding-right: 20px; text-align: left;">
+    <h1>欢迎</h1>
+    <p><span style="font-weight: bold;">
+        {{User.Name}}</span> 老师，教工号：{{User.Id}}
+    </p>
+    <p>
+        {{User.Collage.Name}}
+    </p>
+    <h2>
+        个人简介
+    </h2>
+    <script type="text/javascript">
+        function switchMode() {
+            var desc = document.getElementById('desc');
+            var edit = document.getElementById('edit');
+            if (desc.style.display == 'none') {
+                desc.style.display = ''
+                edit.style.display = 'none'
+            }
+            else {
+                desc.style.display = 'none'
+                edit.style.display = ''
+            }
+        }
+    </script>
+    <p id="desc">
+        {{User.Description | safe}}
+        {% if User.Type == 'Teacher' %}
+            <a class="btn-link" style="padding: 4px 4px 4px 4px; height:auto; margin: auto;" href="javascript: switchMode()">编辑简介</a>
+        {% endif %}
+    </p>
+    <form action="{% url 'set_user_description' %}" method="GET" id="edit" style="display: none;">
+        <textarea class="TextEdit" name="description">{{User.Description | safe}}</textarea>
+        <input type="submit" value="保存" />
+        <input type="button" value="取消" onclick="javascript: switchMode()" />
+    </form>
+</div>

@@ -1,0 +1,42 @@
+<div style="padding-left: 20px; padding-right: 20px;text-align: left;">
+    <h1>成绩查询</h1>
+    <h2>统计信息</h2>
+    <p><b>已选学分数： </b>{{Statistics.Credits}}</p>
+    <p><b>已完成学分数： </b>{{Statistics.CreditsCompleted}}</p>
+    <p><b>平均成绩： </b>{{Statistics.AverageScore}}</p>
+    <h2>课程成绩</h2>
+    <div class="tborder">
+        <table>
+            {% if CourseScores %}
+            <tr>
+                <th>课号</th>
+                <th>课程名</th>
+                <th>任课教师</th>
+                <th>学分数</th>
+                <th>得分</th>
+            </tr>
+            {% else %}
+            暂无成绩记录。
+            {% endif %}
+            {% for courseScore in CourseScores %}
+                <tr>
+                    <td>
+                        {{courseScore.CourseId}}
+                    </td>
+                    <td>
+                        {{courseScore.CourseName}}
+                    </td>
+                    <td>
+                        {{courseScore.TeacherName}}
+                    </td>
+                    <td>
+                        {{courseScore.Credit}}
+                    </td>
+                    <td>
+                        {{courseScore.Score}}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

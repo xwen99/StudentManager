@@ -1,0 +1,113 @@
+<div style="padding-left: 20px; padding-right: 20px; text-align: left;">
+    <h1>课程管理</h1>
+    <h2>我的课程</h2>
+    <div class="tborder">
+        <table width=100% - 40px>
+            {% if Courses %}
+            <tr>
+                <th>课号</th>
+                <th>课程名</th>
+                <th>学分数</th>
+                <th>上课时间</th>
+                <th>上课地点</th>
+                <th>管理课程</th>
+            </tr>
+            {% else %}
+            暂无课程记录。
+            {% endif %}
+            {% for course in Courses %}
+            <tr>
+                <td>
+                    {{course.CourseId}}
+                </td>
+                <td>
+                    {{course.CourseName}}
+                </td>
+                <td>
+                    {{course.Credit}}
+                </td>
+                <td>
+                    {{course.CourseTime}}
+                </td>
+                <td>
+                    {{course.CoursePlace}}
+                </td>
+                <td>
+                    <form action="{% url 'tea_course_detail' %}" style="float: left; margin-right: 8px;" method="GET">
+                        <input type="hidden" name="id" value="{{course.CourseId}}" />
+                        <input type="submit" value="课程详情" />
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% if User.Super %}
+    <h2>全校课程</h2>
+    <div class="Super">
+        <h3 style="margin-top: 0;">录入新课程</h3>
+        <form action="{% url 'new_course' %}" method="get">
+            {% csrf_token %}
+            <p>新增课程号：<input style="width: 120px;" type="text" name="id" />，课程名：<input style="width: 200px;" type="text"
+                    name="name" />，学分数：<input style="width: 20px;" type="text" name="credit" /></p>
+            <p>上课时间：<input style="width: 60px;" type="text" name="year" /> 年 <input style="width: 40px;" type="text"
+                    name="month" /> 月 <input style="width: 40px;" type="text" name="day" /> 日起，第 <input
+                    style="width: 20px;" type="text" name="start_class" /> 到 <input style="width: 20px;" type="text"
+                    name="end_class" /> 节，共 <input style="width: 40px;" type="text" name="times" /> 周</p>
+            <p>上课地点：<input style="width: 240px;" type="text" name="place" /></p>
+            <p>任课教师教工号：<input style="width: 120px;" type="text" name="teacher_id" /></p>
+            <input type="hidden" name="next" value="/tea_course/" />
+            <input type="submit" value="新增课程" />
+        </form>
+    </div>
+    <h3>课程列表</h3>
+    <div class="tborder">
+        <table>
+            {% if GlobalCourses %}
+            <tr>
+                <th>课号</th>
+                <th>课程名</th>
+                <th>学分数</th>
+                <th>上课时间</th>
+                <th>上课地点</th>
+                <th>管理课程</th>
+            </tr>
+            {% else %}
+            暂无课程记录。
+            {% endif %}
+            {% for course in GlobalCourses %}
+            <tr>
+                <td>
+                    {{course.CourseId}}
+                </td>
+                <td>
+                    {{course.CourseName}}
+                </td>
+                <td>
+                    {{course.Credit}}
+                </td>
+                <td>
+                    {{course.CourseTime}}
+                </td>
+                <td>
+                    {{course.CoursePlace}}
+                </td>
+                <td>
+                    <form action="{% url 'tea_course_detail' %}" style="float: left; margin-right: 8px;" method="GET">
+                        <input type="hidden" name="id" value="{{course.CourseId}}" />
+                        <input type="submit" value="课程详情" />
+                    </form>
+                    {% if User.Super %}
+                    <form action="{% url 'delete_course' %}" style="float: left; margin-right: 8px;">
+                        <input type="hidden" name="id" value="{{course.CourseId}}" />
+                        <input type="hidden" name="next" value="/tea_course/?message=" />
+                        <input type="submit" value="删除课程" />
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+</div>

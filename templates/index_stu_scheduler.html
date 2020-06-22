@@ -1,0 +1,38 @@
+<div style="padding-left: 20px; padding-right: 20px; text-align: left;">
+    <h1>课程表</h1>
+    <p>{{Today}}，本周课程：</p>
+    <div class="SchedulerCanvas" style="position:relative">
+        <table cellspacing="0" style="position: relative;
+            left: 0; top: 0; text-align: center; width: 100%; border: 1px solid black;">
+            <style>
+                th{width: 12.5%; border-bottom: 1px solid black; text-align: center;}
+                tr{height: 100px; }
+            </style>
+            <tr style="height: 5%;">
+                <th></th>
+                <th>星期一</th>
+                <th>星期二</th>
+                <th>星期三</th>
+                <th>星期四</th>
+                <th>星期五</th>
+                <th>星期六</th>
+                <th>星期日</th>
+            </tr>
+            <tr><td>08:00 ~ 09:35</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>10:00 ~ 11:35</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>13:30 ~ 15:05</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>15:30 ~ 17:05</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>19:00 ~ 20:35</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </table>
+
+        {% for cd in CourseDisplays %}
+            <div style="position:absolute; width: 12.5%; height: {{cd.Height}}px;
+                left: {{cd.Left}}%; top: {{cd.Top}}%; text-align: center;
+                border: 1px solid white; padding: 4px;">
+                <a style="color: white;">
+                {{cd.Description}}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

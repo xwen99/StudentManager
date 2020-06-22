@@ -1,0 +1,217 @@
+
+body {
+  color: #444;
+  font-family: "Arial", sans-serif;
+  font-size: 16px;
+  line-height: 1.5em;
+  background: #fefefe;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  color: #111;
+  line-height: 1.8em;
+}
+
+h4,
+h5,
+h6 {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2.0em;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+h4 {
+  font-size: 0.8em;
+}
+
+h5 {
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+h6 {
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.tborder{
+  width: 100% - 40px;
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 0px 8px 0px 8px;
+}
+
+.tborder table{
+  width: 100%;
+}
+
+.tborder table tr{
+  height: 40px;
+}
+
+.tborder table tr th{
+  border-bottom: 1px dashed black;
+}
+
+.SchedulerCanvas div:nth-child(5n+0){
+  background-color: #444444;
+}
+.SchedulerCanvas div:nth-child(5n+1){
+  background-color: #222222;
+}
+.SchedulerCanvas div:nth-child(5n+2){
+  background-color: #555555;
+}
+.SchedulerCanvas div:nth-child(5n+3){
+  background-color: #111111;
+}
+.SchedulerCanvas div:nth-child(5n+4){
+  background-color: #333333;
+}
+.SchedulerCanvas table tr:nth-child(odd) td:nth-child(1){
+  background-color: #F7F7F7;
+}
+.SchedulerCanvas table tr:nth-child(even) td:nth-child(1){
+  background-color: #F0F0F0;
+}
+
+.Super{
+  padding: 12px 8px 12px 8px;
+  background-color: #f9f1db;
+  border: 1px solid #f9bd10;
+  border-radius: 4px;
+}
+
+.TabBar{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.TabBar li {
+  list-style:none;
+  padding:0;
+  margin:0;
+  display: inline;
+  background-color: black;
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.btn-link {
+	display: inline-block;
+	height: 50px;
+	margin: 0 5px;
+	padding: 15px 20px 0 20px;
+	border: 1px solid #000;
+	font-size: 16px;
+	font-weight: 300;
+	line-height: 16px;
+	color: #000;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.btn-link:hover,
+.btn-link:focus,
+.btn-link:active,
+.btn-link:active:focus {
+	margin: 0 5px;
+	padding: 15px 20px 0 20px;
+	background: rgba(0, 0, 0, 0.3);
+	border: 1px solid #000;
+	font-size: 16px;
+	font-weight: 300;
+	line-height: 16px;
+	color: #000;
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+input[type=text],
+input[type=password]{
+    outline-style: none ;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+input[type=submit],
+input[type=button]{
+	display: inline-block;
+	padding: 8px;
+	border: 1px solid #000;
+	font-size: 16px;
+	font-weight: 300;
+	line-height: 16px;
+  color: #000;
+  background-color: transparent;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+input[type=submit]:hover,
+input[type=submit]:focus,
+input[type=submit]:active,
+input[type=submit]:active:focus{
+	font-size: 16px;
+	font-weight: 300;
+  line-height: 16px;
+  background-color: #22AA22;
+  color: white;
+  text-decoration: none;
+}
+
+input[type=button]:hover,
+input[type=button]:focus,
+input[type=button]:active,
+input[type=button]:active:focus{
+	font-size: 16px;
+	font-weight: 300;
+  line-height: 16px;
+  background-color: #444444;
+  color: white;
+  text-decoration: none;
+}
+
+.TextEdit{
+  position: relative;
+  resize: none;
+  overflow: scroll;
+  font-family: monospace;
+  width: 100%;
+  height: 400px;
+  border-radius: 4px;
+}
+
+.TextEdit:active,
+.TextEdit:focus{
+  border-radius: 4px;
+  border: steelblue 1px solid;
+}

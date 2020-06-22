@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html >
+<title>W3.CSS Template</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+</head>
+
+<body style="display: table; width: 100%; background-color: white;">
+
+    <div>
+
+        <div class="main" style="padding-top: 10%; padding-left: 10%;">
+            <h1 style="color: black;">学生管理信息系统</h1>
+            <div style="margin-top: 40px;">
+                <div>
+                    <a class="btn-link" href="{% url 'login_student' %}">我是学生</a>
+                    <a class="btn-link" href="{% url 'login_teacher' %}">我是教师</a>
+                </div>
+            </div>
+        </div>
+
+        {% include "footer.html" %}
+    </div>
+
+</body>
+
+</html>

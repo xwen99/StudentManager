@@ -1,0 +1,166 @@
+<div style="padding-left: 20px; padding-right: 20px; text-align: left;">
+    <script type="text/javascript">
+        function switchMode(id1, id2) {
+            var desc = document.getElementById(id1);
+            var edit = document.getElementById(id2);
+            if (desc.style.display == 'none') {
+                desc.style.display = ''
+                edit.style.display = 'none'
+            }
+            else {
+                desc.style.display = 'none'
+                edit.style.display = ''
+            }
+        }
+    </script>
+    <h1>{{Course.CourseId}} {{Course.CourseName}}</h1>
+    <div id="details">
+        <p>
+            <span style="font-weight: bold;">教师：</span>{{Course.TeacherName}}，
+            <span style="font-weight: bold;">学分数：</span>{{Course.Credit}}
+        </p>
+        <p><span style="font-weight: bold;">上课时间：</span>{{Course.CourseTime}}</p>
+        <p><span style="font-weight: bold;">上课地点：</span>{{Course.CoursePlace}}</p>
+        <p><a class="btn-link" style="padding: 4px 4px 4px 4px; height:auto; margin: auto;"
+                href="javascript: switchMode('details', 'edit_details')">更改课程信息</a></p>
+    </div>
+    <div id="edit_details" style="display: none; border: 1px solid black;
+        background-color: #F0F0F0; padding: 8px;">
+        <form action="{% url 'update_course_detail' %}" , method="GET">
+            <p><b>注：</b>未填写的输入框对应信息不会被更改，无需重复填写。</p>
+            <p>学分数：<input style="width: 20px;" type="text" name="credit" />，上课时间：<input style="width: 60px;" type="text"
+                    name="year" /> 年 <input style="width: 40px;" type="text" name="month" /> 月 <input
+                    style="width: 40px;" type="text" name="day" /> 日起，第 <input style="width: 20px;" type="text"
+                    name="start_class" /> 到 <input style="width: 20px;" type="text" name="end_class" /> 节，共 <input
+                    style="width: 40px;" type="text" name="times" /> 周</p>
+            <p>上课地点：<input style="width: 240px;" type="text" name="place" /></p>
+            <p>
+                <input type="hidden" name="id" value="{{Course.CourseId}}" />
+                <input type="hidden" name="next" value="/tea_course_detail/?id={{Course.CourseId}}&message=" />
+                <input type="submit" value="保存" />
+                <input type="button" value="取消" onclick="javascript: switchMode('details', 'edit_details')" />
+            </p>
+        </form>
+    </div>
+    <h2>课程简介</h2>
+    <div id="desc">
+        <p>{{Course.CourseDescription | safe}}</p>
+        <p><a class="btn-link" style="padding: 4px 4px 4px 4px; height:auto; margin: auto;"
+                href="javascript: switchMode('desc', 'edit_desc')">更改课程简介</a></p>
+    </div>
+    <form action="{% url 'update_course_detail' %}" method="GET" id="edit_desc" style="display: none;">
+        <textarea class="TextEdit" name="description">{{Course.CourseDescription | safe}}</textarea>
+        <input type="hidden" name="id" value="{{Course.CourseId}}" />
+        <input type="hidden" name="next" value="/tea_course_detail/?id={{Course.CourseId}}&message=" />
+        <input type="submit" value="保存" />
+        <input type="button" value="取消" onclick="javascript: switchMode('desc', 'edit_desc')" />
+    </form>
+    <h2>学生名单</h2>
+    <p><span style="font-weight: bold;">选课人数：</span>{{Students|length}}</p>
+    <h3>开放专业</h3>
+    <p>
+    <div>
+        <ul class="TabBar">
+            {% for maj in Majorities %}
+            <li>
+                {{maj.Id}} {{maj.Name}}
+            </li>
+            {% empty %}
+            暂无开放的专业。
+            {% endfor %}
+        </ul>
+    </div>
+    </p>
+    {% if User.Super %}
+    <script>
+        function add_maj() {
+            inp = document.getElementById("maj_id_input")
+            inp.name = "add_majority"
+            document.maj_opt.submit()
+        }
+        function rem_maj() {
+            inp = document.getElementById("maj_id_input")
+            inp.name = "remove_majority"
+            document.maj_opt.submit()
+        }
+    </script>
+    <div name="maj_opt" class="Super">
+        <p>您为教务老师，可根据专业号取消课程对专业的开放或添加可选课的专业。</p>
+        <form action="{% url 'update_course_detail' %}" , method="GET">
+            专业号：<input id="maj_id_input" type="text" name="add_majority" />
+            <input type="hidden" name="id" value="{{Course.CourseId}}" />
+            <input type="button" onclick="add_maj()" value="添加专业" />
+            <input type="button" onclick="rem_maj()" value="删除专业" />
+            <input type="hidden" name="next" value="/tea_course_detail/?id={{Course.CourseId}}&message=" />
+        </form>
+    </div>
+    {% endif %}
+    <h3>全部学生</h3>
+    <div class="tborder">
+        <table>
+            {% if Students %}
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>学院</th>
+                <th>分数情况</th>
+                <th>更多操作</th>
+            </tr>
+            {% else %}
+            暂无选课学生记录。
+            {% endif %}
+            {% for student in Students %}
+            <tr>
+                <td>
+                    {{student.Id}}
+                </td>
+                <td>
+                    {{student.Name}}
+                </td>
+                <td>
+                    {{student.CollageName}}
+                </td>
+                <td>
+                    {{student.Score}}
+                </td>
+                <td>
+                    {% if student.Completed %}
+                    {% else %}
+                    <form action="{% url 'tea_update_score' %}" method="get" style="float: left; margin-right: 8px;">
+                        {% csrf_token %}
+                        <input type="hidden" name="student_id" value="{{student.Id}}" />
+                        <input type="hidden" name="course_id" value="{{Course.CourseId}}" />
+                        <input type="hidden" name="next" value="/tea_course_detail/?id={{Course.CourseId}}&message=" />
+                        <input type="text" name="score" value="" />
+                        <input type="submit" value="录入分数" />
+                    </form>
+                    {% endif %}
+                    {% if User.Super and not student.Completed %}
+                    <form action="{% url 'stu_quit_course' %}" method="get" style="float: left;">
+                        {% csrf_token %}
+                        <input type="hidden" name="student_id" value="{{student.Id}}" />
+                        <input type="hidden" name="course_id" value="{{Course.CourseId}}" />
+                        <input type="hidden" name="next" value="/tea_course_detail/?id={{Course.CourseId}}&message=" />
+                        <input type="submit" value="取消选课" />
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% if User.Super %}
+    <p>
+    <div class="Super">
+        <p>您为教务老师，可将特定学生添加进课程或在学生列表中将已选课同学移出课程。</p>
+        <form action="{% url 'stu_select_course' %}" method="get">
+            {% csrf_token %}
+            学号：<input type="text" name="student_id" />
+            <input type="submit" value="录入学生" />
+            <input type="hidden" name="course_id" value="{{Course.CourseId}}" />
+            <input type="hidden" name="next" value="/tea_course_detail/?id={{Course.CourseId}}&message=" />
+        </form>
+    </div>
+    </p>
+    {% endif %}
+</div>
